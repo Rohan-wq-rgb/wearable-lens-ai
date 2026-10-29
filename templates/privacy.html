@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero">
+        <h1>Privacy & Security</h1>
+        <p>Learn how WearableLens AI protects your privacy and handles your data securely.</p>
+    </div>
+
+    <div class="upload-section">
+        <div class="container">
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Data Protection</h3>
+                    </div>
+                    <div class="match-list">
+                        <h4>No Account Required</h4>
+                        <p>WearableLens AI does not require user accounts, login credentials, or personal registration to use our services.</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">Image Handling</h4>
+                        <p>• Images are processed in real-time and not permanently stored by default</p>
+                        <p>• Uploaded images are automatically deleted after analysis (typically within 1 hour)</p>
+                        <p>• No image data is shared with third parties without explicit user consent</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">AI Analysis Privacy</h4>
+                        <p>• AI analysis is performed through external providers (OpenAI, Google Gemini) when configured</p>
+                        <p>• Users are informed when AI providers receive their images</p>
+                        <p>• All API communications are encrypted (HTTPS only)</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Security Measures</h3>
+                    </div>
+                    <div class="match-list">
+                        <h4>Technical Safeguards</h4>
+                        <p>• End-to-end encryption for all data transmissions</p>
+                        <p>• Secure API key management (environment variables only)</p>
+                        <p>• Rate limiting to prevent abuse</p>
+                        <p>• Input validation and file type restrictions</p>
+                        <p>• Regular security audits and updates</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">User Control</h4>
+                        <p>• Manual search mode available when AI providers are not configured</p>
+                        <p>• Transparent information about data processing</p>
+                        <p>• Clear explanation of AI limitations and manual search guidance</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Your Rights</h3>
+                    </div>
+                    <div class="match-list">
+                        <h4>Data Control</h4>
+                        <p>• You control what data you upload</p>
+                        <p>• You can delete your data by clearing browser cache or requesting deletion</p>
+                        <p>• No persistent tracking or cookies for analysis purposes</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">Transparency</h4>
+                        <p>• Clear explanation of how images are processed</p>
+                        <p>• Information about AI provider usage and limitations</p>
+                        <p>• Manual fallback when AI is unavailable</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="{{ url_for('identify') }}">Identify a Device</a></li>
+                    <li><a href="{{ url_for('explore') }}">Explore Wearables</a></li>
+                    <li><a href="{{ url_for('compare') }}">Compare Devices</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>WearableLens AI - Premium Wearable Tech Identification</p>
+        </div>
+    </div>
+{% endblock %}

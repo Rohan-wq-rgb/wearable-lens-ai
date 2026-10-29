@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero">
+        <h1>Explore Wearable Technology</h1>
+        <p>Discover a comprehensive database of wearable devices, their features, and typical use cases.</p>
+    </div>
+
+    <div class="upload-section">
+        <div class="container">
+            <div style="text-align: center;">
+                <h3>Browse Devices</h3>
+                <p>Filter by category, manufacturer, or price range</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <div class="container">
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Categories</h3>
+                    </div>
+                    <ul class="match-list">
+                        {% for category in categories %}
+                        <li>
+                            <a href="{{ url_for('explore') }}?category={{ category|replace(' ', '+') }}">
+                                {{ category }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Manufacturers</h3>
+                    </div>
+                    <ul class="match-list">
+                        {% for manufacturer in manufacturers %}
+                        <li>
+                            <a href="{{ url_for('explore') }}?manufacturer={{ manufacturer|replace(' ', '+') }}">
+                                {{ manufacturer }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Price Range</h3>
+                    </div>
+                    <ul class="match-list">
+                        {% if price_range %}
+                        <li>From ${{ price_range[0] }}</li>
+                        <li>To ${{ price_range[1] }}</li>
+                        {% else %}
+                        <li>Price data not available</li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Search Devices</h3>
+                        <form method="GET" action="{{ url_for('explore') }}" style="display: flex; gap: 1rem;">
+                            <input type="text" name="q" placeholder="Search device name..." style="flex: 1; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                            <button type="submit" style="background: var(--accent-primary); color: white; border: none; padding: 0 1.5rem; border-radius: 6px; cursor: pointer;">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="{{ url_for('identify') }}">Identify a Device</a></li>
+                    <li><a href="{{ url_for('compare') }}">Compare Devices</a></li>
+                    <li><a href="{{ url_for('privacy') }}">Privacy & Security</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>WearableLens AI - Premium Wearable Tech Identification</p>
+        </div>
+    </div>
+{% endblock %}

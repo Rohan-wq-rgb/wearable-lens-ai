@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero">
+        <div class="hero-content">
+            <h1>WearableLens AI</h1>
+            <p>Identify and understand wearable electronic devices with AI-powered analysis. 
+            From temple-mounted audio devices to smart glasses and miniature cameras.</p>
+            <a href="{{ url_for('identify') }}" class="cta-button">Start Identification</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>AI-Powered Identification</h3>
+                <p>Upload a photo and get verified device matches with confidence scores.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Premium Design</h3>
+                <p>Dark charcoal theme with cyan accents, elegant cards, and smooth animations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Manual Search</h3>
+                <p>Fallback to manual search when AI analysis is unavailable.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Privacy Focused</h3>
+                <p>No mandatory accounts, temporary uploads, and transparent data handling.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-section">
+        <div class="upload-container">
+            <div class="upload-area" id="deviceUpload">
+                <div class="upload-icon">📷</div>
+                <h3>Upload Device Photo</h3>
+                <p>Select an image of the wearable device for identification</p>
+                <p class="upload-info">Supported formats: PNG, JPG, JPEG, WEBP (max 10MB)</p>
+                <button type="button" class="btn-remove" id="removeImage">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <h2>Recent Identifications</h2>
+        <div class="results-grid">
+            {% for device in devices %}
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="result-title">{{ device.name }}</div>
+                    <span class="confidence-badge confidence-{{ device.confidence_label }}">{{ device.confidence_label }}</span>
+                </div>
+                <div class="result-content">
+                    <div class="match-list">
+                        {% for match in device.possible_matches %}
+                        <div class="match-item">
+                            <div class="match-name">{{ match.name }}</div>
+                            <div class="match-confidence">Confidence: {{ match.confidence_label }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Category</div>
+                        <div class="result-value">{{ device.category }}</div>
+                        <div class="result-label">Manufacturer</div>
+                        <div class="result-value">{{ device.manufacturer }}</div>
+                        <div class="result-label">Main Functions</div>
+                        <div class="result-value">{{ device.main_functions|join(', ') }}</div>
+                        <div class="result-label">Typical Users</div>
+                        <div class="result-value">{{ device.typical_users|join(', ') }}</div>
+                        <div class="result-label">Price Range</div>
+                        <div class="result-value">{{ device.approximate_price }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ url_for('identify') }}">Identify Device</a></li>
+                    <li><a href="{{ url_for('explore') }}">Explore Wearables</a></li>
+                    <li><a href="{{ url_for('compare') }}">Compare Devices</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Help</h4>
+                <ul>
+                    <li><a href="{{ url_for('privacy') }}">Privacy & Security</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>WearableLens AI - Premium Wearable Tech Identification</p>
+        </div>
+    </div>
+{% endblock %}

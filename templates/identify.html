@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero">
+        <h1>Identify Wearable Device</h1>
+        <p>Upload a photo of the wearable device to get AI-powered analysis and identification.</p>
+    </div>
+
+    <div class="upload-section">
+        <div class="container">
+            <div class="upload-area" id="deviceUpload">
+                <div class="upload-icon">📷</div>
+                <h3>Upload Device Photo</h3>
+                <p>Select an image of the wearable device for identification</p>
+                <p class="upload-info">Supported formats: PNG, JPG, JPEG, WEBP (max 10MB)</p>
+                <button type="button" class="btn-remove" id="removeImage" style="display: none;">Remove</button>
+            </div>
+            <form id="identificationForm" method="POST" enctype="multipart/form-data">
+                <input type="file" name="device_image" id="deviceImageInput" accept=".png,.jpg,.jpeg,.webp" required>
+                <button type="submit" class="btn-remove" style="margin-top: 1rem; background: var(--accent-primary); color: white; border: none; padding: 0.75rem 2rem; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight: 600;">Analyze Device</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="results-section">
+        <h2>Identification Results</h2>
+        <div class="results-grid" id="resultsGrid">
+            <!-- Results will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ url_for('explore') }}">Explore Wearables</a></li>
+                    <li><a href="{{ url_for('compare') }}">Compare Devices</a></li>
+                    <li><a href="{{ url_for('privacy') }}">Privacy & Security</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>WearableLens AI - Premium Wearable Tech Identification</p>
+        </div>
+    </div>
+{% endblock %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('identificationForm');
+        const fileInput = document.getElementById('deviceImageInput');
+        const uploadArea = document.getElementById('deviceUpload');
+        const removeButton = document.getElementById('removeImage');
+        
+        // Handle file selection
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                uploadArea.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+                uploadArea.style.backgroundSize = 'cover';
+                uploadArea.style.backgroundPosition = 'center';
+                uploadArea.style.backgroundColor = 'transparent';
+                uploadArea.innerHTML = `<div style="position: relative; z-index: 1;">
+                    <img src="${URL.createObjectURL(file)}" alt="Uploaded device" style="max-width: 100%; max-height: 300px; border-radius: 8px; margin: 0 auto;">
+                    <button type="button" class="btn-remove" style="position: absolute; top: 10px; right: 10px; background: rgba(220, 53, 69, 0.8); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 20px;">&times;</button>
+                </div>`;
+                removeButton.style.display = 'block';
+            }
+        });
+        
+        // Remove image
+        removeButton.addEventListener('click', function() {
+            fileInput.value = '';
+            uploadArea.style.backgroundImage = '';
+            uploadArea.style.backgroundColor = 'var(--background-secondary)';
+            uploadArea.innerHTML = `<div class="upload-icon">📷</div>
+                <h3>Upload Device Photo</h3>
+                <p>Select an image of the wearable device for identification</p>
+                <p class="upload-info">Supported formats: PNG, JPG, JPEG, WEBP (max 10MB)</p>`;
+            removeButton.style.display = 'none';
+        });
+        
+        // Handle form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('device_image', fileInput.files[0]);
+            
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="loading-spinner"></span> Analyzing...';
+            
+            fetch('/identify', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Display results
+                    const grid = document.getElementById('resultsGrid');
+                    grid.innerHTML = '';
+                    
+                    const resultCard = document.createElement('div');
+                    resultCard.className = 'result-card';
+                    resultCard.innerHTML = `
+                        <div class="result-header">
+                            <div class="result-title">${data.analysis.product_name}</div>
+                            <span class="confidence-badge confidence-${data.analysis.confidence_label}">${data.analysis.confidence_label}</span>
+                        </div>
+                        <div class="result-content">
+                            <div class="match-list">
+                                {% for match in data.analysis.possible_matches[:3] %}
+                                <div class="match-item">
+                                    <div class="match-name">${match.name}</div>
+                                    <div class="match-confidence">Confidence: ${match.confidence_label}</div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Category</div>
+                                <div class="result-value">${data.analysis.category}</div>
+                                <div class="result-label">Manufacturer</div>
+                                <div class="result-value">${data.analysis.manufacturer}</div>
+                                <div class="result-label">Main Functions</div>
+                                <div class="result-value">${data.analysis.main_functions|join(', ') if data.analysis.main_functions else 'Not specified'}</div>
+                                <div class="result-label">Typical Users</div>
+                                <div class="result-value">${data.analysis.typical_users|join(', ') if data.analysis.typical_users else 'Not specified'}</div>
+                                <div class="result-label">Price Range</div>
+                                <div class="result-value">${data.analysis.approximate_price}</div>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(resultCard);
+                } else {
+                    showError(data.error || 'Analysis failed');
+                }
+            })
+            .catch(error => {
+                console.error('Analysis error:', error);
+                showError('Analysis failed. Please try again.');
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Analyze Device';
+            });
+        });
+    });
+
+    function showError(message) {
+        alert(message);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero">
+        <h1>About WearableLens AI</h1>
+        <p>Learn more about our mission to make wearable technology accessible and understandable.</p>
+    </div>
+
+    <div class="upload-section">
+        <div class="container">
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Our Mission</h3>
+                    </div>
+                    <div class="match-list">
+                        <p>WearableLens AI is dedicated to making wearable technology accessible and understandable to everyone, from enthusiasts to professionals.</p>
+                        <p>We combine cutting-edge AI technology with rigorous human oversight to provide accurate device identification and information.</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>How We Work</h3>
+                    </div>
+                    <div class="match-list">
+                        <p>• Upload device photos for AI analysis</p>
+                        <p>• AI provides possible matches with confidence levels</p>
+                        <p>• Manual search available as fallback</p>
+                        <p>• Never fabricate product information</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Contact</h3>
+                    </div>
+                    <div class="match-list">
+                        <p>Email: contact@wearablelens.ai</p>
+                        <p>Support: help@wearablelens.ai</p>
+                        <p>Response time: 24-48 hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="{{ url_for('identify') }}">Identify a Device</a></li>
+                    <li><a href="{{ url_for('explore') }}">Explore Wearables</a></li>
+                    <li><a href="{{ url_for('compare') }}">Compare Devices</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>WearableLens AI - Premium Wearable Tech Identification</p>
+        </div>
+    </div>
+{% endblock %}
