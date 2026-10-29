@@ -1,0 +1,85 @@
+/* Dark theme overrides for WearableLens AI */
+
+[data-theme="dark"] {
+    background-color: #0a0a0a;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
+}
+
+[data-theme="dark"] .hero h1,
+[data-theme="dark"] .hero p {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .features {
+    background: #0a0a0a;
+}
+
+[data-theme="dark"] .upload-section {
+    background: #0f0f0f;
+}
+
+[data-theme="dark"] .results-section {
+    background: #0a0a0a;
+}
+
+[data-theme="dark"] .footer {
+    background: #0f0f0f;
+}
+
+/* Additional dark theme enhancements */
+[data-theme="dark"] body {
+    background-color: #0a0a0a;
+}
+
+[data-theme="dark"] .upload-area {
+    background: #1a1a1a;
+}
+
+[data-theme="dark"] .feature-card {
+    background: #1a1a1a;
+    border-color: #404040;
+}
+
+[data-theme="dark"] .result-card {
+    background: #1a1a1a;
+    border-color: #404040;
+}
+
+[data-theme="dark"] .result-title {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .result-value {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .result-label {
+    color: #b3b3b3;
+}
+
+[data-theme="dark"] .result-card .result-label {
+    color: #b3b3b3;
+}
+
+[data-theme="dark"] .result-card .result-value {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer {
+    background: #0f0f0f;
+}
+
+[data-theme="dark"] .footer-section h4 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer-section a {
+    color: #b3b3b3;
+}
+
+[data-theme="dark"] .footer-bottom {
+    color: #888;
+}
