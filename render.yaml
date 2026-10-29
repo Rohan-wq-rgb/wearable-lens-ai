@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: wearable-lens-ai
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 4 -b 0.0.0.0:5000 app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: AI_PROVIDER
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+    healthCheckPath: /api/health
+    autoDeploy: true
