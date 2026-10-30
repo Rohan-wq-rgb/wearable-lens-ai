@@ -313,7 +313,7 @@ DEVICE_DATABASE = [
             "dimensions": "35mm x 35mm x 9mm"
         }
     }
-]
+}
 
 
 def search_devices(query: str) -> list:
