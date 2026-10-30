@@ -274,8 +274,8 @@ DEVICE_DATABASE = [
         "compatibility": {
             "os": ["iOS", "Android"],
             "connectivity": ["Bluetooth 5.0"],
-            "requirements": ["Companion app required, iOS 14+/Android 6+"
-        ],
+            "requirements": ["Companion app required, iOS 14+/Android 6+"]
+        },
         "advantages": [
             "Compact size",
             "Replaceable battery",
@@ -313,7 +313,7 @@ DEVICE_DATABASE = [
             "dimensions": "35mm x 35mm x 9mm"
         }
     }
-}
+]
 
 
 def search_devices(query: str) -> list:
